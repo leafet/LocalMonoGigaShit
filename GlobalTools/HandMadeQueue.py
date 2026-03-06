@@ -1,74 +1,75 @@
 class Node:
-    def __init__(self, Data):
-        self.Data = Data
-        self.Next = None
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
     def __del__(self):
         pass
 
+
 class HMQueue:
     def __init__(self):
-        self.Front = None
-        self.Rear = None
-        self.Data = None
-        self.Size = 0
+        self.front = None
+        self.rear = None
+        self.data = None
+        self.size = 0
 
-    def enqueue(self, Data):
-        node_to_add = Node(Data)
+    def enqueue(self, data):
+        node_to_add = Node(data)
 
-        if self.Rear is None:
-            self.Front = node_to_add
-            self.Rear = node_to_add
+        if self.rear is None:
+            self.front = node_to_add
+            self.rear = node_to_add
         else:
-            self.Rear.Next = node_to_add
-            self.Rear = node_to_add
+            self.rear.next = node_to_add
+            self.rear = node_to_add
 
-        self.Size += 1
-        self.Data = Data
+        self.size += 1
+        self.data = data
 
     def enqueue_by_node(self, node_to_add: Node):
 
-        if self.Rear is None:
-            self.Front = node_to_add
-            self.Rear = node_to_add
+        if self.rear is None:
+            self.front = node_to_add
+            self.rear = node_to_add
         else:
-            self.Rear.Next = node_to_add
-            self.Rear = node_to_add
+            self.rear.next = node_to_add
+            self.rear = node_to_add
 
-        self.Size += 1
-        self.Data = node_to_add.Data
+        self.size += 1
+        self.data = node_to_add.data
 
     def dequeue(self):
-        if self.Front is None:
+        if self.front is None:
             return None
 
-        node_to_get = self.Front
-        self.Front = self.Front.Next
+        node_to_get = self.front
+        self.front = self.front.next
 
-        if self.Front is None:
-            self.Rear = None
+        if self.front is None:
+            self.rear = None
 
-        data_to_return = node_to_get.Data
+        data_to_return = node_to_get.data
 
         del node_to_get
 
-        self.Size -= 1
+        self.size -= 1
         return data_to_return
 
     def dequeue_by_node(self):
-        if self.Front is None:
+        if self.front is None:
             return None
 
-        node_to_get = self.Front
-        self.Front = self.Front.Next
+        node_to_get = self.front
+        self.front = self.front.next
 
-        if self.Front is None:
-            self.Rear = None
+        if self.front is None:
+            self.rear = None
 
-        self.Size -= 1
+        self.size -= 1
         return node_to_get
 
     def peek(self):
-        if self.Front is None:
+        if self.front is None:
             return None
-        return self.Front.Data
+        return self.front.data

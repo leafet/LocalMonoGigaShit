@@ -15,7 +15,7 @@ ExamTaskC16. На вход подаются сведения о клиентах
 «Нет данных».
 """
 
-from GlobalTools.SharedInput import GTLS
+from GlobalTools.SharedInput import GINPT
 
 import pickle
 
@@ -46,10 +46,10 @@ class FitnessCenterInfoSystem:
     @staticmethod
     def input_client():
         print("\nВведите данные клиента:")
-        exercises_length = GTLS.get_int_input("Продолжительность занятий (1-30 часов): ", min_value=1, max_value=30)
-        client_code = GTLS.get_int_input("Код клиента (10-99): ", min_value=10, max_value=99)
-        year = GTLS.get_int_input("Год (2000-2010): ", min_value=2000, max_value=2010)
-        month = GTLS.get_int_input("Номер месяца (1-12): ", min_value=1, max_value=12)
+        exercises_length = GINPT.get_int_input("Продолжительность занятий (1-30 часов): ", min_value=1, max_value=30)
+        client_code = GINPT.get_int_input("Код клиента (10-99): ", min_value=10, max_value=99)
+        year = GINPT.get_int_input("Год (2000-2010): ", min_value=2000, max_value=2010)
+        month = GINPT.get_int_input("Номер месяца (1-12): ", min_value=1, max_value=12)
 
 
         return FitnessCenterClientRecord(month, year, client_code, exercises_length)
@@ -103,9 +103,9 @@ class FitnessCenterInfoSystem:
 def main():
     fitness_center_system = FitnessCenterInfoSystem()
 
-    k = GTLS.get_int_input("Введите код клиента: ", min_value=10, max_value=99)
+    k = GINPT.get_int_input("Введите код клиента: ", min_value=10, max_value=99)
 
-    n = GTLS.get_int_input("Введите количество клиентов: ", min_value=1)
+    n = GINPT.get_int_input("Введите количество клиентов: ", min_value=1)
 
     clients = []
 

@@ -1,7 +1,7 @@
 class Node:
-    def __init__(self, Data):
-        self.Data = Data
-        self.Next = None
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
     def __del__(self):
         pass
@@ -9,44 +9,49 @@ class Node:
 class HMList:
     def __init__(self):
         self.head = None
-        self.Len = 0
+        self.len = 0
 
-    def append(self, Data):
-        new_node = Node(Data)
+    def append(self, data):
+        new_node = Node(data)
         if self.head is None:
             self.head = new_node
+            self.len += 1
             return
 
         last_node = self.head
+        while last_node.next is not None:
+            last_node = last_node.next
 
-        while last_node.Next is not None:
-            last_node = last_node.Next
+        last_node.next = new_node
+        self.len += 1
 
-        last_node.Next = new_node
-        self.Len += 1
-
-    def insert(self, index, Data):
-        node_to_add = Node(Data)
-
-        if index > self.Len:
+    def insert(self, index, data):
+        if index < 0 or index > self.len:
             raise IndexError("Index out of range")
 
+        node_to_add = Node(data)
+
+        if index == 0:
+            node_to_add.next = self.head
+            self.head = node_to_add
+            self.len += 1
+            return
+
+        current = self.head
         count = 0
-
-        for item in self:
-            if count == index - 1:
-                target = item
-
-                node_to_add.Next = target.Next
-                target.Next = node_to_add
+        while count < index - 1:
+            current = current.next
             count += 1
 
+        node_to_add.next = current.next
+        current.next = node_to_add
+        self.len += 1
+
     def __getitem__(self, index):
-        if index > self.Len:
+        if index < 0 or index >= self.len:
             raise IndexError("Index out of range")
 
         count = 0
-
         for item in self:
             if count == index:
                 return item
@@ -54,20 +59,18 @@ class HMList:
 
         raise IndexError("Index has wrong format")
 
-    def __setitem__(self, index, Data):
-        if index > self.Len:
+    def __setitem__(self, index, data):
+        if index < 0 or index >= self.len:
             raise IndexError("Index out of range")
 
         count = 0
-
         for item in self:
             if count == index:
-                item.Data = Data
+                item.data = data
             count += 1
-
 
     def __iter__(self):
         current_node = self.head
         while current_node is not None:
             yield current_node
-            current_node = current_node.Next
+            current_node = current_node.next

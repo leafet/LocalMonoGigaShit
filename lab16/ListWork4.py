@@ -5,15 +5,22 @@
 """
 
 from GlobalTools.HandMadeList import HMList
+import random as r
 
-newList = HMList()
+def main():
+    new_list = HMList()
 
-newList.append(5)
-newList.append(15)
-newList.append(25)
-newList.append(35)
+    for i in range(15):
+        data = r.randint(0, 25)
+        new_list.append(data)
 
-newList.insert(3, 12)
+    for item in new_list:
+        print(item, end=" ")
 
-for item in newList:
-    print(item.Data)
+    print()
+
+    print(new_list[4])
+
+
+if __name__ == "__main__":
+    main()

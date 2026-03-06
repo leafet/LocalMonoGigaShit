@@ -1,40 +1,40 @@
 class Node:
-    def __init__(self, Data):
-        self.Data = Data
-        self.Next = None
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
     def __del__(self):
         pass
 
 class HMStack:
     def __init__(self):
-        self.Top = None
-        self.Data = None
+        self.top = None
+        self.data = None
 
-    def push(self, Data):
-        node_to_add = Node(Data)
+    def push(self, data):
+        node_to_add = Node(data)
 
-        if self.Top is None:
-            self.Top = node_to_add
+        if self.top is None:
+            self.top = node_to_add
 
-        node_to_add.Next = self.Top
-        self.Top = node_to_add
-        self.Data = Data
+        node_to_add.next = self.top
+        self.top = node_to_add
+        self.data = data
 
     def pop(self):
-        if self.Top is None:
+        if self.top is None:
             return None
 
-        node_to_get = self.Top
-        self.Top = self.Top.Next
+        node_to_get = self.top
+        self.top = self.top.next
 
-        data_to_return = node_to_get.Data
+        data_to_return = node_to_get.data
 
         del node_to_get
 
         return data_to_return
 
     def peek(self):
-        if self.Top is None:
+        if self.top is None:
             return None
-        return self.Top.Data
+        return self.top.data

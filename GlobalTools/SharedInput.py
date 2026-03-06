@@ -1,6 +1,7 @@
-class GTLS:
+class GINPT:
     def __init__(self):
         pass
+
     @staticmethod
     def get_int_input(prompt: str, min_value: int = None, max_value: int = None):
         while True:
