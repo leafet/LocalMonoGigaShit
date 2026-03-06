@@ -15,7 +15,7 @@ def main():
         new_list.append(data)
 
     for item in new_list:
-        print(item, end=" ")
+        print(item.data, end=" ")
 
     print()
 

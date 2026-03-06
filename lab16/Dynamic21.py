@@ -40,6 +40,8 @@ def main():
     while q2.size != 0:
         q1.enqueue_by_node(q2.dequeue_by_node())
 
+    print("Итоговая очередь")
+
     while q1.size != 0:
         print(q1.dequeue())
 

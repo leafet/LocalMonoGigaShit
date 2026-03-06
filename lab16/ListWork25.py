@@ -25,7 +25,7 @@ def copy_with_insert_before_even(source: HMList, value):
 def main():
     source_list = HMList()
 
-    for i in range(4):
+    for i in range(5):
         data = r.randint(0, 25)
         source_list.append(data)
 
