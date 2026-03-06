@@ -24,12 +24,18 @@ def insert_sorted_desc(lst: HMList, value):
 def main():
     with open("./ListWork62.txt", "r") as f:
         n = int(f.readline().strip())
-        numbers = list(map(int, f.readline().strip().split()))
+        nums_line = f.readline().strip()
 
     sorted_list = HMList()
 
-    for num in numbers:
+    num_start = 0
+    for i in range(n):
+        num_end = num_start
+        while num_end < len(nums_line) and nums_line[num_end] != ' ':
+            num_end += 1
+        num = int(nums_line[num_start:num_end])
         insert_sorted_desc(sorted_list, num)
+        num_start = num_end + 1
 
     for item in sorted_list:
         print(item.data, end=" ")
