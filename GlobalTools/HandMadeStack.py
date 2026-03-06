@@ -3,9 +3,6 @@ class Node:
         self.data = data
         self.next = None
 
-    def __del__(self):
-        pass
-
 class HMStack:
     def __init__(self):
         self.top = None

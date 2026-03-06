@@ -3,10 +3,6 @@ class Node:
         self.data = data
         self.next = None
 
-    def __del__(self):
-        pass
-
-
 class HMQueue:
     def __init__(self):
         self.front = None

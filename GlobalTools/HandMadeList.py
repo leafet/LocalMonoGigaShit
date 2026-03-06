@@ -3,9 +3,6 @@ class Node:
         self.data = data
         self.next = None
 
-    def __del__(self):
-        pass
-
 class HMList:
     def __init__(self):
         self.head = None
