@@ -4,7 +4,6 @@ class Node:
         self.prev = None
         self.next = None
 
-
 class HMDLList:
     def __init__(self):
         self.first = None
@@ -67,7 +66,27 @@ class HMDLList:
         new_node.next = current
         current.prev.next = new_node
         current.prev = new_node
+
         self.len += 1
+
+        return new_node
+
+    def move_to_end(self, node):
+        if node.prev is None:
+            self.first = node.next
+            self.first.prev = None
+            node.next = None
+            node.prev = self.last
+            self.last.next = node
+            self.last = node
+        else:
+            node.prev.next = node.next
+            node.next.prev = node.prev
+
+            node.next = None
+            node.prev = self.last
+            self.last.next = node
+            self.last = node
 
     def delete(self, index):
         if index < 0 or index >= self.len:
@@ -112,7 +131,7 @@ class HMDLList:
                 current = current.prev
                 count -= 1
 
-        return current.data
+        return current
 
     def __setitem__(self, index, data):
         if index < 0 or index >= self.len:
@@ -141,36 +160,3 @@ class HMDLList:
 
     def __len__(self):
         return self.len
-
-    def move_to_next(self):
-        if self.current is not None and self.current.next is not None:
-            self.current = self.current.next
-            return True
-        return False
-
-    def move_to_prev(self):
-        if self.current is not None and self.current.prev is not None:
-            self.current = self.current.prev
-            return True
-        return False
-
-    def get_current(self):
-        if self.current is None:
-            return None
-        return self.current.data
-
-    def set_current(self, index):
-        if index < 0 or index >= self.len:
-            raise IndexError("Index out of range")
-        self.current = self.first
-        for _ in range(index):
-            self.current = self.current.next
-
-    def is_empty(self):
-        return self.len == 0
-
-    def clear(self):
-        self.first = None
-        self.last = None
-        self.current = None
-        self.len = 0
