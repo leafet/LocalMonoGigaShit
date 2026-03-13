@@ -7,60 +7,79 @@
 вывести ссылки на первый, последний и текущий элементы полученного списка.
 """
 
-from GlobalTools.HandMadeDLlist import HMDLList, Node
-import random as r
+from GlobalTools.HandMadeDLlist import Node
 
-class IntList(HMDLList):
-    def insert_after(self, data):
-        if self.current is None:
-            self.append(data)
-            return
 
+class IntList:
+    def __init__(self, aFirst: Node = None, aLast: Node = None, aCurrent: Node = None):
+        self.__first = aFirst
+        self.__last = aLast
+        self.__current = aCurrent
+
+    def insert_last(self, data: int):
+        """Добавляет новый элемент со значением D в конец списка.
+        Добавленный элемент становится текущим."""
         new_node = Node(data)
-
-        new_node.prev = self.current
-        new_node.next = self.current.next
-
-        if self.current.next is not None:
-            self.current.next.prev = new_node
+        
+        if self.__first is None:
+            # Пустой список
+            self.__first = new_node
+            self.__last = new_node
+            self.__current = new_node
         else:
-            self.last = new_node
+            # Добавляем в конец
+            new_node.prev = self.__last
+            self.__last.next = new_node
+            self.__last = new_node
+            self.__current = new_node
 
-        self.current.next = new_node
-        self.current = new_node
-        self.len += 1
+    def put(self):
+        """Выводит ссылки на поля first, last и current."""
+        print(f"first: {id(self.__first) if self.__first else 'null'}")
+        print(f"last: {id(self.__last) if self.__last else 'null'}")
+        print(f"current: {id(self.__current) if self.__current else 'null'}")
+
+    def get_first(self) -> Node:
+        return self.__first
+
+    def get_last(self) -> Node:
+        return self.__last
+
+    def get_current(self) -> Node:
+        return self.__current
+
+    def to_list(self) -> list:
+        """Возвращает список значений для отладки."""
+        result = []
+        current = self.__first
+        while current is not None:
+            result.append(current.data)
+            current = current.next
+        return result
 
 
 def main():
-    dl_list = IntList()
+    # Создаём пустой список (A1 = A2 = A3 = null)
+    int_list = IntList()
 
-    initial_values = [10, 20, 30, 40, 50]
-    for value in initial_values:
-        dl_list.append(value)
-
-    print("Исходный список:")
-    for item in dl_list:
-        print(item.data, end=" ")
+    print("Исходный список (пустой):")
+    int_list.put()
     print()
 
-    print(f"A1 (first): {dl_list.first.data}")
-    print(f"A2 (last): {dl_list.last.data}")
-    print(f"A3 (current): {dl_list.current.data}")
+    # Число N и набор из N чисел
+    N = 5
+    values = [10, 25, 37, 42, 58]
 
-    values_to_insert = [r.randint(1, 100) for _ in range(5)]
-    print(f"\nЧисла для вставки: {values_to_insert}")
+    print(f"Добавляем {N} чисел: {values}")
+    for val in values:
+        int_list.insert_last(val)
 
-    for val in values_to_insert:
-        dl_list.insert_after(val)
-
-    print("\nСписок после вставки:")
-    for item in dl_list:
-        print(item.data, end=" ")
+    print("\nСписок после добавления:")
+    print(f"Значения: {int_list.to_list()}")
     print()
 
-    print(f"\nA1 (first): {dl_list.first.data}")
-    print(f"A2 (last): {dl_list.last.data}")
-    print(f"A3 (current): {dl_list.current.data}")
+    print("Ссылки на первый, последний и текущий элементы:")
+    int_list.put()
 
 
 if __name__ == "__main__":
