@@ -66,7 +66,6 @@ def regroup_list(dl_list: HMDLList) -> Node:
 
     return dl_list.first
 
-
 def main():
     dl_list = HMDLList()
 

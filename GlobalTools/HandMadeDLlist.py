@@ -21,98 +21,58 @@ class HMDLList:
             new_node.prev = self.last
             self.last.next = new_node
             self.last = new_node
-        self.len += 1
-
-    def prepend(self, data):
-        new_node = Node(data)
-        if self.first is None:
-            self.first = new_node
-            self.last = new_node
             self.current = new_node
-        else:
-            new_node.next = self.first
-            self.first.prev = new_node
-            self.first = new_node
         self.len += 1
 
     def insert(self, index, data):
-        if index < 0 or index > self.len:
+        if index < 0 or index >= self.len:
             raise IndexError("Index out of range")
-
-        if index == 0:
-            self.prepend(data)
-            return
-
-        if index == self.len:
-            self.append(data)
-            return
 
         new_node = Node(data)
 
         if index < self.len // 2:
             current = self.first
-            count = 0
-            while count < index:
+            for _ in range(index):
                 current = current.next
-                count += 1
         else:
             current = self.last
-            count = self.len - 1
-            while count >= index:
+            for _ in range(self.len - 1, index, -1):
                 current = current.prev
-                count -= 1
 
-        new_node.prev = current.prev
-        new_node.next = current
-        current.prev.next = new_node
-        current.prev = new_node
+        new_node.next = current.next
+        new_node.prev = current
+
+        if current.next is not None:
+            current.next.prev = new_node
+        else:
+            self.last = new_node
+
+        current.next = new_node
 
         self.len += 1
-
         return new_node
 
-    def move_to_end(self, node):
-        if node.prev is None:
-            self.first = node.next
-            self.first.prev = None
-            node.next = None
-            node.prev = self.last
-            self.last.next = node
-            self.last = node
+    def insert_after_current(self, data):
+        new_node = Node(data)
+
+        if self.current is None:
+            self.first = new_node
+            self.last = new_node
+            self.current = new_node
         else:
-            node.prev.next = node.next
-            node.next.prev = node.prev
+            new_node.prev = self.current
+            new_node.next = self.current.next
 
-            node.next = None
-            node.prev = self.last
-            self.last.next = node
-            self.last = node
+            if self.current.next is not None:
+                self.current.next.prev = new_node
+            else:
+                self.last = new_node
 
-    def delete(self, index):
-        if index < 0 or index >= self.len:
-            raise IndexError("Index out of range")
+            self.current.next = new_node
+            self.current = new_node
 
-        node_to_delete = self.first
-        count = 0
-        while count < index:
-            node_to_delete = node_to_delete.next
-            count += 1
-
-        if node_to_delete.prev is not None:
-            node_to_delete.prev.next = node_to_delete.next
-        else:
-            self.first = node_to_delete.next
-
-        if node_to_delete.next is not None:
-            node_to_delete.next.prev = node_to_delete.prev
-        else:
-            self.last = node_to_delete.prev
-
-        if self.current == node_to_delete:
-            self.current = node_to_delete.next if node_to_delete.next else self.first
-
-        self.len -= 1
-        return node_to_delete.data
+        self.len += 1
+        return new_node
 
     def __getitem__(self, index):
         if index < 0 or index >= self.len:

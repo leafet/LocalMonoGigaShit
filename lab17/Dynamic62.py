@@ -7,79 +7,57 @@
 вывести ссылки на первый, последний и текущий элементы полученного списка.
 """
 
-from GlobalTools.HandMadeDLlist import Node
+from GlobalTools.HandMadeDLlist import HMDLList
 
+class IntList(HMDLList):
 
-class IntList:
-    def __init__(self, aFirst: Node = None, aLast: Node = None, aCurrent: Node = None):
-        self.__first = aFirst
-        self.__last = aLast
-        self.__current = aCurrent
+    # метод из Dynamic59
+    def InsertLast(self, D: int):
+        return self.append(D)
 
-    def insert_last(self, data: int):
-        """Добавляет новый элемент со значением D в конец списка.
-        Добавленный элемент становится текущим."""
-        new_node = Node(data)
-        
-        if self.__first is None:
-            # Пустой список
-            self.__first = new_node
-            self.__last = new_node
-            self.__current = new_node
+    # метод из нового задания
+    def InsertAfter(self, D: int):
+        return self.insert_after_current(D)
+
+    def Put(self):
+        if self.first:
+            print(f"first: id {self.first} with value {self.first.data}")
         else:
-            # Добавляем в конец
-            new_node.prev = self.__last
-            self.__last.next = new_node
-            self.__last = new_node
-            self.__current = new_node
+            print("first: null")
 
-    def put(self):
-        """Выводит ссылки на поля first, last и current."""
-        print(f"first: {id(self.__first) if self.__first else 'null'}")
-        print(f"last: {id(self.__last) if self.__last else 'null'}")
-        print(f"current: {id(self.__current) if self.__current else 'null'}")
+        if self.last:
+            print(f"last: id {self.last} with value {self.last.data}")
+        else:
+            print("last: null")
 
-    def get_first(self) -> Node:
-        return self.__first
-
-    def get_last(self) -> Node:
-        return self.__last
-
-    def get_current(self) -> Node:
-        return self.__current
-
-    def to_list(self) -> list:
-        """Возвращает список значений для отладки."""
-        result = []
-        current = self.__first
-        while current is not None:
-            result.append(current.data)
-            current = current.next
-        return result
-
+        if self.current:
+            print(f"current: id {self.current} with value {self.current.data}")
+        else:
+            print("current: null")
 
 def main():
-    # Создаём пустой список (A1 = A2 = A3 = null)
+    initial_values = [12, 54, 34, 765, 12, 45, 878]
+
     int_list = IntList()
 
-    print("Исходный список (пустой):")
-    int_list.put()
-    print()
+    for value in initial_values:
+        int_list.InsertLast(value)
 
-    # Число N и набор из N чисел
-    N = 5
+    print("Исходный список:")
+    print([node.data for node in int_list])
+
     values = [10, 25, 37, 42, 58]
 
-    print(f"Добавляем {N} чисел: {values}")
+    print("\nВставляем через InsertAfter:")
     for val in values:
-        int_list.insert_last(val)
+        int_list.InsertAfter(val)
 
-    print("\nСписок после добавления:")
-    print(f"Значения: {int_list.to_list()}")
-    print()
+    print("\nСписок:")
+    print([node.data for node in int_list])
 
-    print("Ссылки на первый, последний и текущий элементы:")
-    int_list.put()
+    print("\nСсылки:")
+    int_list.Put()
+
 
 
 if __name__ == "__main__":
