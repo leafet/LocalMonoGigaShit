@@ -73,6 +73,8 @@ class GameInterface:
         self.IsRunning = True
         self.gameLogic = GameLogic()
 
+        self.game_state = "selecting"
+
         self.turn_number = 1
 
         self.first_pack_height = 400
@@ -95,6 +97,10 @@ class GameInterface:
     def resize_pack_visual(self, new_first_volume, new_second_volume):
         self.first_pack_height = (new_first_volume / 24000) * 400
         self.second_pack_height = (new_second_volume / 24000) * 400
+
+    def process_move(self, player, move_type):
+        if player == "Masha" and move_type == "FP":
+            self.gameLogic.Masha.do_turn_with_one_pack(self.gameLogic.pack1)
 
     def create_buttons(self):
         button_masha_first_pack = Button(
@@ -159,7 +165,8 @@ class GameInterface:
             pressedColour=(128, 128, 128),
             onClick=lambda: {
                 self.gameLogic.UncleAndrey.do_turn(self.gameLogic.pack2),
-                self.resize_pack_visual(self.gameLogic.pack1.volume, self.gameLogic.pack2.volume)
+                self.resize_pack_visual(self.gameLogic.pack1.volume, self.gameLogic.pack2.volume),
+
             }
         )
 
@@ -202,7 +209,6 @@ class GameInterface:
 
             for btn in buttons:
                 btn.draw()
-
 
             text_surface_p1 = self.text_font.render(f"{self.gameLogic.pack1.volume}", False, (0, 0, 0))
             text_surface_p2 = self.text_font.render(f"{self.gameLogic.pack2.volume}", False, (0, 0, 0))
