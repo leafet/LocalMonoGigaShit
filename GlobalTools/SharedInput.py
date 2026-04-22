@@ -1,3 +1,5 @@
+import random
+
 class GINPT:
     def __init__(self):
         pass
@@ -40,6 +42,10 @@ class GINPT:
                 return value
             except ValueError:
                 print("Значение должно быть строкой")
+
+    @staticmethod
+    def get_rand_int_list(size: int):
+        return [random.randint(1, 100) for _ in range(size)]
 
     @staticmethod
     def get_matrix_from_file(file_path: str):

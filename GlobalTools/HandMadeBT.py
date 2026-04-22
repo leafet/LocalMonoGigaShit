@@ -1,0 +1,64 @@
+from collections import deque
+
+
+class BinaryTreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = BinaryTreeNode(value)
+        else:
+            self._insert_recursive(value)
+
+    def _insert_recursive(self, value):
+        new_node = BinaryTreeNode(value)
+        if self.root is None:
+            self.root = new_node
+            return
+
+        queue = deque([self.root])
+        while queue:
+            node = queue.popleft()
+            if node.left is None:
+                node.left = new_node
+                return
+            else:
+                queue.append(node.left)
+            if node.right is None:
+                node.right = new_node
+                return
+            else:
+                queue.append(node.right)
+
+    def get_leaves(self):
+        return self._collect_leaves(self.root)
+
+    def _collect_leaves(self, node):
+        if node is None:
+            return []
+        if node.left is None and node.right is None:
+            return [node.value]
+        return self._collect_leaves(node.left) + self._collect_leaves(node.right)
+
+    def is_avl(self):
+        def height_and_balance(node):
+            if node is None:
+                return 0
+            left_h = height_and_balance(node.left)
+            if left_h == -1:
+                return -1
+            right_h = height_and_balance(node.right)
+            if right_h == -1:
+                return -1
+            if abs(left_h - right_h) > 1:
+                return -1
+            return max(left_h, right_h) + 1
+
+        return height_and_balance(self.root) != -1
