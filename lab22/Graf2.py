@@ -12,8 +12,8 @@ from GlobalTools.HandMadeGraph import Graph
 
 def main():
     try:
-        adj_matr = GINPT.get_matrix_from_file("FileName.txt")
-    except ValueError as e:
+        adj_matr, n = GINPT.get_matrix_from_file("FileName.txt")
+    except (ValueError, IOError) as e:
         print(f"Ошибка чтения файла матрицы - {e}")
         return
 
@@ -21,6 +21,7 @@ def main():
 
     for vertex in myGr.vertices:
         print(f"Степень вершины {vertex.id} = {vertex.degree}")
+
 
 if __name__ == "__main__":
     main()

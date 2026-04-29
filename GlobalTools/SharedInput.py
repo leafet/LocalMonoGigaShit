@@ -48,6 +48,13 @@ class GINPT:
         return [random.randint(1, 100) for _ in range(size)]
 
     @staticmethod
+    def get_int_list_from_file(file_path: str):
+        with open(file_path, "r", encoding="utf-8") as f:
+            line = f.readline()
+
+        return list(map(int, line.split()))
+
+    @staticmethod
     def get_matrix_from_file(file_path: str):
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -82,6 +89,20 @@ class GINPT:
             if len(row) != n:
                 raise ValueError(f"В строке {i} ожидается {n} чисел, получено {len(row)}.")
             matrix.append(row)
+
+        for i in range(n):
+            for j in range(n):
+                if matrix[i][j] not in (0, 1):
+                    raise ValueError(f"Элемент матрицы [{i + 1},{j + 1}] = {matrix[i][j]} не является 0 или 1.")
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                if matrix[i][j] != matrix[j][i]:
+                    raise ValueError(
+                        f"Матрица не симметрична: элемент [{i + 1},{j + 1}] = {matrix[i][j]} "
+                        f"не равен [{j + 1},{i + 1}] = {matrix[j][i]}."
+                    )
+
 
         return matrix, n
 

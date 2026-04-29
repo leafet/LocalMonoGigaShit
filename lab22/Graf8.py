@@ -16,7 +16,7 @@ from GlobalTools.HandMadeGraph import Graph
 def main():
     try:
         matrix, n = GINPT.get_matrix_from_file("FileName3.txt")
-    except ValueError as e:
+    except (ValueError, IOError) as e:
         print(f"Ошибка чтения файла матрицы - {e}")
         return
 
